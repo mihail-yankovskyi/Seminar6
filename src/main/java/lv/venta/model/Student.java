@@ -1,11 +1,13 @@
 package lv.venta.model;
 
+import java.util.Collection;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -20,15 +22,16 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "ProfessorTable")
+@Table(name = "StudentTable")
 @Entity
-public class Professor {
-	//variables
+public class Student {
+	
 	@Setter(value = AccessLevel.NONE)
-	@Column(name = "Idp")
+	@Column(name = "Ids")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idp;
+	private long ids;
+	
 	
 	@NotNull
 	@Pattern(regexp = "[A-Z]{1}[a-z]+")
@@ -42,20 +45,16 @@ public class Professor {
 	@Column(name = "Surname")
 	private String surname;
 	
-	@NotNull
-	@Column(name = "Degree")
-	private Degree degree;
-	
-	@OneToOne(mappedBy = "professor")//need to specify title of variable
+	@OneToMany(mappedBy = "student")//need to specify another class variable
 	@ToString.Exclude
-	private Course course;
+	private Collection<Grade> grades;
 	
 	
-	public Professor(String name, String surname, Degree degree)
-	{
+	
+	
+	public Student(String name, String surname) {
 		setName(name);
 		setSurname(surname);
-		setDegree(degree);
 	}
 	
 
